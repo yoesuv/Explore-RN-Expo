@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text, View, Image, Button } from "react-native";
 
 export default function Index() {
   return (
@@ -9,7 +9,14 @@ export default function Index() {
         alignItems: "center",
       }}
     >
+      <Image source={require("../assets/images/react-logo.png")} />
       <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Button
+        title="Click Me"
+        onPress={() => {
+          alert("Hello World");
+        }}
+      />
     </View>
   );
 }
