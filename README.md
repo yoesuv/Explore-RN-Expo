@@ -1,3 +1,3 @@
-## Session 1
+## Session 2
 
-![](https://i.imgur.com/WVgbyVf.png)
+![](https://i.imgur.com/0CG90I9.png)
