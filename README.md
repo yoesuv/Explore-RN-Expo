@@ -1,3 +1,3 @@
-## Session 2
+## Homework 1
 
-![](https://i.imgur.com/0CG90I9.png)
+![](https://i.imgur.com/2ZsauDo.png)
