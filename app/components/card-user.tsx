@@ -1,12 +1,15 @@
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { avatarLink, loremShort } from "../constants";
+import useUserStore from "@/src/use-user-store";
 
 export default function CardUser() {
+  const { name } = useUserStore();
+
   return (
     <View style={styles.card}>
       <Image source={{ uri: avatarLink }} style={styles.avatar} />
-      <Text style={styles.name}>Yusuf Saifudin</Text>
+      <Text style={styles.name}>{name}</Text>
       <Text numberOfLines={3} style={styles.bio}>
         {loremShort}
       </Text>
