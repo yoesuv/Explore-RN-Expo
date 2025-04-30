@@ -2,6 +2,7 @@ import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { avatarLink, loremShort } from "../constants";
 import useUserStore from "@/src/use-user-store";
+import AppButton from "./app-button";
 
 export default function CardUser() {
   const { name } = useUserStore();
@@ -14,9 +15,7 @@ export default function CardUser() {
         {loremShort}
       </Text>
       <View style={styles.follow}>
-        <TouchableOpacity style={styles.buttonFollow}>
-          <Text style={styles.buttonText}>Follow</Text>
-        </TouchableOpacity>
+        <AppButton onPress={() => {}} title="Follow" />
         <View style={{ width: 16 }} />
         <TouchableOpacity style={styles.buttonSend}>
           <View>
@@ -67,19 +66,6 @@ const styles = StyleSheet.create({
   follow: {
     flexDirection: "row",
     marginTop: 16,
-  },
-  buttonFollow: {
-    flex: 1,
-    backgroundColor: "#046BA5",
-    borderRadius: 12,
-    paddingVertical: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "800",
   },
   buttonSend: {
     backgroundColor: "#CDE1ED",
