@@ -1,10 +1,11 @@
-import { View, StyleSheet, SafeAreaView, Button } from "react-native";
+import { View, StyleSheet, SafeAreaView } from "react-native";
 import { useRouter } from "expo-router";
 
 import CardUser from "./components/card-user";
 import StatisticsUser from "./components/statistics-user";
 import FriendsUser from "./components/friends-user";
 import GalleryUser from "./components/gallery-user";
+import AppButton from "./components/app-button";
 
 export default function Home() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function Home() {
           </View>
         </View>
         <View style={styles.viewLogout}>
-          <Button
+          <AppButton
             onPress={() => {
               router.replace("/");
             }}
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
     marginEnd: 16,
   },
   viewLogout: {
+    height: 50,
     marginTop: 16,
     marginHorizontal: 16,
   },

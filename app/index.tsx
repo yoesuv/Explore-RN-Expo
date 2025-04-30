@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   Text,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 import useUserStore from "@/src/use-user-store";
@@ -14,6 +15,7 @@ import AppPasswordField from "./components/app-password-field";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { useLogin } from "@/src/hooks/use-login";
 
 interface ILoginInput {
   username: string;
@@ -23,6 +25,7 @@ interface ILoginInput {
 export default function Index() {
   const router = useRouter();
   const { updateName } = useUserStore();
+  const { mutate, isPending } = useLogin();
 
   const schema = Yup.object().shape({
     username: Yup.string()
@@ -35,7 +38,6 @@ export default function Index() {
 
   const {
     control,
-    handleSubmit,
     formState,
     watch,
     formState: { errors },
@@ -77,11 +79,24 @@ export default function Index() {
           <AppButton
             onPress={() => {
               var name = watch("username");
-              updateName(name);
-              router.push("/home");
+              var password = watch("password");
+              const data = {
+                username: name,
+                password: password,
+              };
+              mutate(data, {
+                onSuccess: () => {
+                  updateName(name);
+                  router.replace("/home");
+                },
+                onError: () => {
+                  Alert.alert("Error", "Invalid username or password");
+                },
+              });
             }}
             title="Login"
             disabled={!isDirty || !isValid}
+            isLoading={isPending}
           />
         </View>
         <TouchableOpacity
