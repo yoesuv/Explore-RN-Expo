@@ -1,17 +1,24 @@
 // Button.tsx
 import React from "react";
-import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 
 interface AppButtonProps {
   title: string;
   onPress: () => void;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const AppButton: React.FC<AppButtonProps> = ({
   title,
   onPress,
   disabled = false,
+  isLoading = false,
 }) => {
   return (
     <TouchableOpacity
@@ -20,9 +27,13 @@ const AppButton: React.FC<AppButtonProps> = ({
         ...(disabled ? [{ backgroundColor: "#D3D3D3" }] : []),
       ]}
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || isLoading}
     >
-      <Text style={styles.buttonText}>{title}</Text>
+      {isLoading ? (
+        <ActivityIndicator size="small" color="#fff" />
+      ) : (
+        <Text style={styles.buttonText}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 };
