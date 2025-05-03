@@ -1,5 +1,5 @@
-## Homework 2
+## Session 4
 
-|                Login                 |               Register               |                 Home                 |
-| :----------------------------------: | :----------------------------------: | :----------------------------------: |
-| ![](https://i.imgur.com/UUPy78F.png) | ![](https://i.imgur.com/qWWDnap.png) | ![](https://i.imgur.com/WcIwfmd.png) |
+|                Login                 |                 Home                 |
+| :----------------------------------: | :----------------------------------: |
+| ![](https://i.imgur.com/Q7WzbIw.gif) | ![](https://i.imgur.com/RNP5Yxa.gif) |
