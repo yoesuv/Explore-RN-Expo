@@ -1,17 +1,54 @@
 import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Image } from "expo-image";
-import { avatarLink, loremShort } from "../constants";
-import useUserStore from "@/src/use-user-store";
+import {
+  keyEmail,
+  keyFirstName,
+  keyImage,
+  keyLastName,
+  loremShort,
+} from "../constants";
 import AppButton from "./app-button";
+import { useEffect, useState } from "react";
 
 export default function CardUser() {
-  const { name } = useUserStore();
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  const getEmail = async () => {
+    const email = await AsyncStorage.getItem(keyEmail);
+    if (email) {
+      setEmail(email);
+    }
+  };
+
+  const getName = async () => {
+    const firstName = await AsyncStorage.getItem(keyFirstName);
+    const lastName = await AsyncStorage.getItem(keyLastName);
+    setName(firstName + " " + lastName);
+  };
+
+  const getAvatar = async () => {
+    const image = await AsyncStorage.getItem(keyImage);
+    if (image) {
+      setAvatar(image);
+    }
+  };
+
+  useEffect(() => {
+    getName();
+    getEmail();
+    getAvatar();
+  }, [email, name, avatar]);
 
   return (
     <View style={styles.card}>
-      <Image source={{ uri: avatarLink }} style={styles.avatar} />
+      <Image source={{ uri: avatar }} style={styles.avatar} />
       <Text style={styles.name}>{name}</Text>
-      <Text numberOfLines={3} style={styles.bio}>
+      <Text style={styles.email}>{email}</Text>
+      <Text numberOfLines={2} style={styles.bio}>
         {loremShort}
       </Text>
       <View style={styles.follow}>
@@ -55,6 +92,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#000",
     marginTop: 15,
+  },
+  email: {
+    fontSize: 16,
+    fontWeight: "semibold",
+    color: "#000",
+    marginTop: 8,
   },
   bio: {
     fontSize: 12,
