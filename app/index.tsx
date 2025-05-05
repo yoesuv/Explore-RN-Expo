@@ -7,15 +7,18 @@ import {
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
-import useUserStore from "@/src/use-user-store";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import AppButton from "./components/app-button";
 import React from "react";
 import AppTextField from "./components/app-text-field";
 import AppPasswordField from "./components/app-password-field";
-import { Controller, useForm, SubmitHandler } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useLogin } from "@/src/hooks/use-login";
+import { LoginRequest } from "@/src/models/login-request";
+import { keyEmail, keyFirstName, keyImage, keyLastName } from "./constants";
 
 interface ILoginInput {
   username: string;
@@ -24,7 +27,6 @@ interface ILoginInput {
 
 export default function Index() {
   const router = useRouter();
-  const { updateName } = useUserStore();
   const { mutate, isPending } = useLogin();
 
   const schema = Yup.object().shape({
@@ -47,6 +49,24 @@ export default function Index() {
   });
 
   const { isDirty, isValid } = formState;
+
+  const handleLogin = (credentials: LoginRequest) => {
+    mutate(credentials, {
+      onSuccess: async (data) => {
+        console.log("---------------");
+        console.log(`First Name: ${data.firstName}`);
+        console.log(`Email: ${data.email}`);
+        await AsyncStorage.setItem(keyFirstName, data.firstName);
+        await AsyncStorage.setItem(keyLastName, data.lastName);
+        await AsyncStorage.setItem(keyEmail, data.email);
+        await AsyncStorage.setItem(keyImage, data.image);
+        router.replace("/home");
+      },
+      onError: (error) => {
+        Alert.alert("Error", "Invalid username or password");
+      },
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -80,19 +100,11 @@ export default function Index() {
             onPress={() => {
               var name = watch("username");
               var password = watch("password");
-              const data = {
+              const dataLogin = {
                 username: name,
                 password: password,
               };
-              mutate(data, {
-                onSuccess: () => {
-                  updateName(name);
-                  router.replace("/home");
-                },
-                onError: () => {
-                  Alert.alert("Error", "Invalid username or password");
-                },
-              });
+              handleLogin(dataLogin);
             }}
             title="Login"
             disabled={!isDirty || !isValid}

@@ -73,3 +73,8 @@ export const dataGallery: ItemGallery[] = [
   { id: 15, image: imageLink },
   { id: 16, image: imageLink2 },
 ];
+
+export const keyFirstName = "firstName";
+export const keyLastName = "lastName";
+export const keyEmail = "email";
+export const keyImage = "image";
